@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GanHuo</string>
+    <string name="tab_day">每日推荐</string>
+    <string name="tab_android">Android</string>
+    <string name="tab_ios">IOS</string>
+    <string name="tab_fuli">福利</string>
+</resources>
