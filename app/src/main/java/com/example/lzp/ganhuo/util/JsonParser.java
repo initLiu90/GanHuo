@@ -28,6 +28,7 @@ public class JsonParser {
             List<Today.Results.Item> webList = new ArrayList<>();
             List<Today.Results.Item> resList = new ArrayList<>();
             List<Today.Results.Item> fuliList = new ArrayList<>();
+            List<Today.Results.Item> xiaList = new ArrayList<>();
 
             JSONArray androids = results.getJSONArray("Android");
             int aLen = androids.length();
@@ -42,7 +43,15 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item android = new Today.Results.Item();
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                    Log.e("Test", "image=" + image);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                Today.Results.Android android = new Today.Results.Android();
                 android.set_id(_id);
                 android.setCreatedAt(createdAt);
                 android.setDesc(desc);
@@ -52,6 +61,7 @@ public class JsonParser {
                 android.setUrl(url);
                 android.setUsed(used);
                 android.setWho(who);
+                android.setImage(image);
 
                 androidList.add(android);
             }
@@ -69,7 +79,14 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item ios = new Today.Results.Item();
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                } catch (Exception e) {
+
+                }
+                Today.Results.Ios ios = new Today.Results.Ios();
                 ios.set_id(_id);
                 ios.setCreatedAt(createdAt);
                 ios.setDesc(desc);
@@ -79,6 +96,7 @@ public class JsonParser {
                 ios.setUrl(url);
                 ios.setUsed(used);
                 ios.setWho(who);
+                ios.setImage(image);
 
                 iosList.add(ios);
             }
@@ -96,7 +114,14 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item video = new Today.Results.Item();
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                } catch (Exception e) {
+
+                }
+                Today.Results.Video video = new Today.Results.Video();
                 video.set_id(_id);
                 video.setCreatedAt(createdAt);
                 video.setDesc(desc);
@@ -106,6 +131,7 @@ public class JsonParser {
                 video.setUrl(url);
                 video.setUsed(used);
                 video.setWho(who);
+                video.setImage(image);
 
                 videoList.add(video);
             }
@@ -123,7 +149,14 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item web = new Today.Results.Item();
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                } catch (Exception e) {
+
+                }
+                Today.Results.Web web = new Today.Results.Web();
                 web.set_id(_id);
                 web.setCreatedAt(createdAt);
                 web.setDesc(desc);
@@ -133,6 +166,7 @@ public class JsonParser {
                 web.setUrl(url);
                 web.setUsed(used);
                 web.setWho(who);
+                web.setImage(image);
 
                 webList.add(web);
             }
@@ -150,7 +184,14 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item res = new Today.Results.Item();
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                } catch (Exception e) {
+
+                }
+                Today.Results.Resource res = new Today.Results.Resource();
                 res.set_id(_id);
                 res.setCreatedAt(createdAt);
                 res.setDesc(desc);
@@ -160,6 +201,7 @@ public class JsonParser {
                 res.setUrl(url);
                 res.setUsed(used);
                 res.setWho(who);
+                res.setImage(image);
 
                 resList.add(res);
             }
@@ -177,7 +219,7 @@ public class JsonParser {
                 String url = jsobj.getString("url");
                 String used = jsobj.getString("used");
                 String who = jsobj.getString("who");
-                Today.Results.Item fuli = new Today.Results.Item();
+                Today.Results.Fuli fuli = new Today.Results.Fuli();
                 fuli.set_id(_id);
                 fuli.setCreatedAt(createdAt);
                 fuli.setDesc(desc);
@@ -190,6 +232,40 @@ public class JsonParser {
 
                 fuliList.add(fuli);
             }
+            JSONArray xias = results.getJSONArray("瞎推荐");
+            int xLen = ress.length();
+            for (int a = 0; a < xLen; a++) {
+                JSONObject jsobj = xias.getJSONObject(a);
+                String _id = jsobj.getString("_id");
+                String createdAt = jsobj.getString("createdAt");
+                String desc = jsobj.getString("desc");
+                String publishedAt = jsobj.getString("publishedAt");
+                String source = jsobj.getString("source");
+                String type = jsobj.getString("type");
+                String url = jsobj.getString("url");
+                String used = jsobj.getString("used");
+                String who = jsobj.getString("who");
+                String image = null;
+                try {
+                    JSONArray images = jsobj.getJSONArray("images");
+                    image = (String) images.get(0);
+                } catch (Exception e) {
+
+                }
+                Today.Results.Xia xia = new Today.Results.Xia();
+                xia.set_id(_id);
+                xia.setCreatedAt(createdAt);
+                xia.setDesc(desc);
+                xia.setPublishedAt(publishedAt);
+                xia.setSource(source);
+                xia.setType(type);
+                xia.setUrl(url);
+                xia.setUsed(used);
+                xia.setWho(who);
+                xia.setImage(image);
+
+                xiaList.add(xia);
+            }
             Today.Results results1 = new Today.Results();
             results1.setAndroids(androidList);
             results1.setIoss(iosList);
@@ -197,6 +273,7 @@ public class JsonParser {
             results1.setResources(resList);
             results1.setVideos(videoList);
             results1.setWebs(webList);
+            results1.setXias(xiaList);
 
             today.setResults(results1);
 

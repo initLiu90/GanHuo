@@ -18,6 +18,7 @@ public class Today {
         private List<Item> webs;
         private List<Item> resources;
         private List<Item> fulis;
+        private List<Item> xias;
 
         public List<Item> getAndroids() {
             return androids;
@@ -67,16 +68,77 @@ public class Today {
             this.fulis = fulis;
         }
 
+        public List<Item> getXias() {
+            return xias;
+        }
+
+        public void setXias(List<Item> xias) {
+            this.xias = xias;
+        }
+
+        public static class Android extends Item {
+
+        }
+
+        public static class Ios extends Item {
+
+        }
+
+        public static class Video extends Item {
+
+        }
+
+        public static class Web extends Item {
+
+        }
+
+        public static class Resource extends Item {
+
+        }
+
+        public static class Fuli extends Item {
+
+        }
+
+        public static class Xia extends Item {
+
+        }
+
+        public static class Title extends Item {
+            private String name;
+
+            public Title(String name) {
+                setName(name);
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+        }
+
         public static class Item {
-            private String _id;
-            private String createdAt;
-            private String desc;
-            private String publishedAt;
-            private String source;
-            private String type;
-            private String url;
-            private String used;
-            private String who;
+            protected String _id;
+            protected String createdAt;
+            protected String desc;
+            protected String publishedAt;
+            protected String source;
+            protected String type;
+            protected String url;
+            protected String used;
+            protected String who;
+            protected String image;
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
 
             public void set_id(String _id) {
                 this._id = _id;
@@ -112,6 +174,42 @@ public class Today {
 
             public void setWho(String who) {
                 this.who = who;
+            }
+
+            public String get_id() {
+                return _id;
+            }
+
+            public String getCreatedAt() {
+                return createdAt;
+            }
+
+            public String getDesc() {
+                return desc;
+            }
+
+            public String getPublishedAt() {
+                return publishedAt;
+            }
+
+            public String getSource() {
+                return source;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public String getUrl() {
+                return url;
+            }
+
+            public String getUsed() {
+                return used;
+            }
+
+            public String getWho() {
+                return who;
             }
         }
     }

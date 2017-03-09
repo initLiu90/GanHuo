@@ -17,7 +17,7 @@ import org.json.JSONObject;
 
 public class TodayPresenter implements TodayContract.Presenter {
     private static final String TODAY_URL = "http://gank.io/api/day/";
-
+    private static final String REQUEST_TAG = "today";
     private TodayContract.View mTodayView;
 
     public TodayPresenter(TodayContract.View todayView) {
@@ -26,9 +26,10 @@ public class TodayPresenter implements TodayContract.Presenter {
 
     @Override
     public void requestTodayData(int year, int month, int day) {
+        mTodayView.showLoadingIndicator(true);
         String url = TODAY_URL + year + "/" + month + "/" + day;
 
-        MyVolley.request(url, new Response.Listener<String>() {
+        MyVolley.request(url, REQUEST_TAG, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
                 TodayPresenter.this.processTodayData(s);
@@ -41,7 +42,13 @@ public class TodayPresenter implements TodayContract.Presenter {
         });
     }
 
+    @Override
+    public void cancleRequest() {
+        MyVolley.cancleRequest(REQUEST_TAG);
+    }
+
     private void processTodayData(String s) {
+        mTodayView.showLoadingIndicator(false);
         Today today = JsonParser.parse2Today(s);
         mTodayView.showTodayData(today);
     }

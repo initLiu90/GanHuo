@@ -13,13 +13,20 @@ import com.example.lzp.ganhuo.app.BaseApplication;
 public class MyVolley {
     private static RequestQueue sRequestQueue;
 
-    public static void request(String url, Response.Listener<String> responseListener, Response
+    public static void request(String url, String tag, Response.Listener<String> responseListener, Response
             .ErrorListener errorListener) {
         if (sRequestQueue == null) {
             sRequestQueue = Volley.newRequestQueue(BaseApplication.sApplication);
         }
 
         StringRequest request = new StringRequest(url, responseListener, errorListener);
+        request.setTag(tag);
         sRequestQueue.add(request);
+    }
+
+    public static void cancleRequest(String tag) {
+        if (sRequestQueue != null) {
+            sRequestQueue.cancelAll(tag);
+        }
     }
 }
