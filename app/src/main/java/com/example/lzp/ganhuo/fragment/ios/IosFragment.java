@@ -1,32 +1,32 @@
-package com.example.lzp.ganhuo.fragment;
+package com.example.lzp.ganhuo.fragment.ios;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lzp.ganhuo.R;
+import com.example.lzp.ganhuo.fragment.BaseFragment;
 
 /**
  * Created by lzp on 2017/3/8.
  */
 
-public class AndroidFragment extends BaseFragment {
-    public static final String TAG = AndroidFragment.class.getSimpleName();
-    public static AndroidFragment sInstance = null;
+public class IosFragment extends BaseFragment {
+    public static final String TAG = IosFragment.class.getSimpleName();
+    public static IosFragment sInstance = null;
 
     public static BaseFragment getInstance() {
         if (sInstance == null) {
-            sInstance = new AndroidFragment();
+            sInstance = new IosFragment();
         }
         return sInstance;
     }
 
     @Override
     public int getTitle() {
-        return R.string.tab_android;
+        return R.string.tab_ios;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class AndroidFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_android, container, false);
+        View view = inflater.inflate(R.layout.fragment_ios, container, false);
         return view;
     }
 

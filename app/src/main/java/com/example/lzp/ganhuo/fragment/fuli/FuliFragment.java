@@ -1,13 +1,13 @@
-package com.example.lzp.ganhuo.fragment;
+package com.example.lzp.ganhuo.fragment.fuli;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lzp.ganhuo.R;
+import com.example.lzp.ganhuo.fragment.BaseFragment;
 
 /**
  * Created by lzp on 2017/3/8.

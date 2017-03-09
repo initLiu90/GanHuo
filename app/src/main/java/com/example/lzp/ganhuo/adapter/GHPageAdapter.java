@@ -5,11 +5,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.lzp.ganhuo.app.BaseApplication;
-import com.example.lzp.ganhuo.fragment.AndroidFragment;
+import com.example.lzp.ganhuo.fragment.android.AndroidFragment;
 import com.example.lzp.ganhuo.fragment.BaseFragment;
-import com.example.lzp.ganhuo.fragment.FuliFragment;
-import com.example.lzp.ganhuo.fragment.IosFragment;
-import com.example.lzp.ganhuo.fragment.TodayFragment;
+import com.example.lzp.ganhuo.fragment.fuli.FuliFragment;
+import com.example.lzp.ganhuo.fragment.ios.IosFragment;
+import com.example.lzp.ganhuo.fragment.today.TodayFragment;
 
 import java.util.ArrayList;
 import java.util.List;
