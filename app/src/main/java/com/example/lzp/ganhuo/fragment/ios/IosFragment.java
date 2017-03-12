@@ -15,14 +15,6 @@ import com.example.lzp.ganhuo.fragment.BaseFragment;
 
 public class IosFragment extends BaseFragment {
     public static final String TAG = IosFragment.class.getSimpleName();
-    public static IosFragment sInstance = null;
-
-    public static BaseFragment getInstance() {
-        if (sInstance == null) {
-            sInstance = new IosFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public int getTitle() {

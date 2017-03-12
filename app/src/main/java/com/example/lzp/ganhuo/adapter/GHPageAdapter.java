@@ -23,10 +23,10 @@ public class GHPageAdapter extends FragmentPagerAdapter {
 
     public GHPageAdapter(FragmentManager fm) {
         super(fm);
-        fragments.add(TodayFragment.getInstance());
-        fragments.add(AndroidFragment.getInstance());
-        fragments.add(IosFragment.getInstance());
-        fragments.add(FuliFragment.getInstance());
+        fragments.add(new TodayFragment());
+        fragments.add(new AndroidFragment());
+        fragments.add(new IosFragment());
+        fragments.add(new FuliFragment());
     }
 
     @Override

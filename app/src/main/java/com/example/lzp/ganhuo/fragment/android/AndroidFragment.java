@@ -15,14 +15,6 @@ import com.example.lzp.ganhuo.fragment.BaseFragment;
 
 public class AndroidFragment extends BaseFragment {
     public static final String TAG = AndroidFragment.class.getSimpleName();
-    public static AndroidFragment sInstance = null;
-
-    public static BaseFragment getInstance() {
-        if (sInstance == null) {
-            sInstance = new AndroidFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public int getTitle() {

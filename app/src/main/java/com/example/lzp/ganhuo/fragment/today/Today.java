@@ -1,5 +1,7 @@
 package com.example.lzp.ganhuo.fragment.today;
 
+import com.example.lzp.ganhuo.fragment.BaseItem;
+
 import java.util.List;
 
 /**
@@ -104,23 +106,7 @@ public class Today {
 
         }
 
-        public static class Title extends Item {
-            private String name;
-
-            public Title(String name) {
-                setName(name);
-            }
-
-            public String getName() {
-                return name;
-            }
-
-            public void setName(String name) {
-                this.name = name;
-            }
-        }
-
-        public static class Item {
+        public static class Item implements BaseItem {
             protected String _id;
             protected String createdAt;
             protected String desc;

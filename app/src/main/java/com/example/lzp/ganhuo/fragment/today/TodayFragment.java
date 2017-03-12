@@ -17,26 +17,21 @@ import com.example.lzp.ganhuo.adapter.TodayRecyclerViewAdapter;
 import com.example.lzp.ganhuo.fragment.BaseFragment;
 import com.example.lzp.ganhuo.net.MyVolley;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by lzp on 2017/3/8.
  */
 
 public class TodayFragment extends BaseFragment implements TodayContract.View, SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = TodayFragment.class.getSimpleName();
-    public static TodayFragment sInstance = null;
 
     private TodayContract.Presenter mPresenter;
     private SwipeRefreshLayout mSwipRefreshLayout;
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private TodayRecyclerViewAdapter mAdapter;
-
-    public static BaseFragment getInstance() {
-        if (sInstance == null) {
-            sInstance = new TodayFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public int getTitle() {
@@ -77,9 +72,21 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
         mSwipRefreshLayout.setOnRefreshListener(this);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new TodayRecyclerViewAdapter(getContext());
+        mAdapter = new TodayRecyclerViewAdapter(getContext(), todayInterface);
         mRecyclerView.setAdapter(mAdapter);
     }
+
+    private TodayInterface todayInterface = new TodayInterface() {
+        @Override
+        public void showImage(String imageUrl) {
+            Log.e("Test", "image=" + imageUrl);
+        }
+
+        @Override
+        public void showContent(String contentUrl) {
+            Log.e("Test", "content=" + contentUrl);
+        }
+    };
 
     @Override
     public void showTodayData(Today data) {
@@ -89,7 +96,6 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     @Override
     public void showLoadingIndicator(boolean active) {
         if (mSwipRefreshLayout != null) {
-            Log.e("Test", "active " + active);
             mSwipRefreshLayout.setRefreshing(active);
         }
     }
@@ -101,7 +107,10 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
 
     private void requestTodayData() {
         if (getUserVisibleHint()) {
-            mPresenter.requestTodayData(2017, 3, 9);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+            Date date = new Date();
+            String strDate = format.format(date);
+            mPresenter.requestTodayData("2017/03/10");
         }
     }
 

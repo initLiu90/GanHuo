@@ -15,15 +15,7 @@ import com.example.lzp.ganhuo.fragment.BaseFragment;
 
 public class FuliFragment extends BaseFragment {
     public static final String TAG = FuliFragment.class.getSimpleName();
-    public static FuliFragment sInstance = null;
     public static final int TITLE = R.string.tab_fuli;
-
-    public static BaseFragment getInstance() {
-        if (sInstance == null) {
-            sInstance = new FuliFragment();
-        }
-        return sInstance;
-    }
 
     @Override
     public int getTitle() {

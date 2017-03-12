@@ -9,7 +9,7 @@ import com.example.lzp.ganhuo.fragment.BaseView;
 
 public interface TodayContract {
     interface Presenter extends BasePresenter {
-        void requestTodayData(int year, int month, int day);
+        void requestTodayData(String date);
 
         void cancleRequest();
     }

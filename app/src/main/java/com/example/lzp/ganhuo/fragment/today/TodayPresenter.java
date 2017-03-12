@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by SKJP on 2017/3/9.
  */
@@ -19,27 +21,22 @@ public class TodayPresenter implements TodayContract.Presenter {
     private static final String TODAY_URL = "http://gank.io/api/day/";
     private static final String REQUEST_TAG = "today";
     private TodayContract.View mTodayView;
+    private ResponseListener mListener;
 
     public TodayPresenter(TodayContract.View todayView) {
         mTodayView = todayView;
+        mListener = new ResponseListener(this);
     }
 
+    /**
+     * @param date 2017/08/21
+     */
     @Override
-    public void requestTodayData(int year, int month, int day) {
+    public void requestTodayData(String date) {
         mTodayView.showLoadingIndicator(true);
-        String url = TODAY_URL + year + "/" + month + "/" + day;
+        String url = TODAY_URL + date;
 
-        MyVolley.request(url, REQUEST_TAG, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String s) {
-                TodayPresenter.this.processTodayData(s);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-
-            }
-        });
+        MyVolley.request(url, REQUEST_TAG,mListener,mListener);
     }
 
     @Override
@@ -48,13 +45,34 @@ public class TodayPresenter implements TodayContract.Presenter {
     }
 
     private void processTodayData(String s) {
-        mTodayView.showLoadingIndicator(false);
         Today today = JsonParser.parse2Today(s);
+        mTodayView.showLoadingIndicator(false);
         mTodayView.showTodayData(today);
     }
 
     @Override
     public void start() {
 
+    }
+
+    private static class ResponseListener implements Response.Listener<String>, Response.ErrorListener {
+        private WeakReference<TodayPresenter> weakReference;
+
+        public ResponseListener(TodayPresenter presenter) {
+            weakReference = new WeakReference<TodayPresenter>(presenter);
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError volleyError) {
+
+        }
+
+        @Override
+        public void onResponse(String s) {
+            TodayPresenter presenter = weakReference.get();
+            if (presenter != null) {
+                presenter.processTodayData(s);
+            }
+        }
     }
 }
