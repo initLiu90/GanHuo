@@ -15,7 +15,7 @@
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?android:windowTitleSize"
             android:layout_gravity="top"
             app:tabBackground="@color/colorPrimary"
             app:tabGravity="center"

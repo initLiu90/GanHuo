@@ -1,6 +1,7 @@
 package com.example.lzp.ganhuo.fragment.today;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.lzp.ganhuo.R;
+import com.example.lzp.ganhuo.activity.BrowserActivity;
 import com.example.lzp.ganhuo.adapter.TodayRecyclerViewAdapter;
 import com.example.lzp.ganhuo.fragment.BaseFragment;
 import com.example.lzp.ganhuo.net.MyVolley;
@@ -79,12 +81,13 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     private TodayInterface todayInterface = new TodayInterface() {
         @Override
         public void showImage(String imageUrl) {
-            Log.e("Test", "image=" + imageUrl);
         }
 
         @Override
         public void showContent(String contentUrl) {
-            Log.e("Test", "content=" + contentUrl);
+            Intent intent = new Intent(TodayFragment.this.getActivity(), BrowserActivity.class);
+            intent.putExtra("url", contentUrl);
+            TodayFragment.this.getActivity().startActivity(intent);
         }
     };
 
@@ -110,7 +113,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String strDate = format.format(date);
-            mPresenter.requestTodayData("2017/03/10");
+            mPresenter.requestTodayData(strDate);
         }
     }
 
