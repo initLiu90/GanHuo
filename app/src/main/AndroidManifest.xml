@@ -25,6 +25,11 @@
             android:name=".activity.BrowserActivity"
             android:launchMode="singleTop"
             android:theme="@style/AppThemeWithTitle" />
+
+        <activity
+            android:name=".activity.ImageGalleryActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/AppThemeWithTitle" />
     </application>
 
 </manifest>

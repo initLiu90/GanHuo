@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.example.lzp.ganhuo.R;
 import com.example.lzp.ganhuo.activity.BrowserActivity;
+import com.example.lzp.ganhuo.activity.ImageGalleryActivity;
 import com.example.lzp.ganhuo.adapter.TodayRecyclerViewAdapter;
 import com.example.lzp.ganhuo.fragment.BaseFragment;
 import com.example.lzp.ganhuo.net.MyVolley;
@@ -81,12 +82,15 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     private TodayInterface todayInterface = new TodayInterface() {
         @Override
         public void showImage(String imageUrl) {
+            Intent intent = new Intent(TodayFragment.this.getActivity(), ImageGalleryActivity.class);
+            intent.putExtra(ImageGalleryActivity.KEY_CUR_URL, imageUrl);
+            TodayFragment.this.getActivity().startActivity(intent);
         }
 
         @Override
         public void showContent(String contentUrl) {
             Intent intent = new Intent(TodayFragment.this.getActivity(), BrowserActivity.class);
-            intent.putExtra("url", contentUrl);
+            intent.putExtra(BrowserActivity.KEY_URL, contentUrl);
             TodayFragment.this.getActivity().startActivity(intent);
         }
     };

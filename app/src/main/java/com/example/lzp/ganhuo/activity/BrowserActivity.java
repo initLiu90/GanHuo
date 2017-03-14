@@ -27,6 +27,8 @@ import com.example.lzp.ganhuo.R;
  */
 
 public class BrowserActivity extends BaseActivity implements Handler.Callback {
+    public static final String KEY_URL = "url";
+
     private WebView mWebView;
     private WebViewClient mClient;
     private WebChromeClient mChromeClient;
@@ -59,7 +61,7 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
         mChromeClient = new MyChromeClient();
         mWebView.setWebViewClient(mClient);
         mWebView.setWebChromeClient(mChromeClient);
-        String url = getIntent().getStringExtra("url");
+        String url = getIntent().getStringExtra(KEY_URL);
         if (!TextUtils.isEmpty(url)) {
             mUrl = url;
             mWebView.loadUrl(url);
