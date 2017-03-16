@@ -25,8 +25,7 @@ public class GHDbHelper extends SQLiteOpenHelper {
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " + TodayPersistenceContract.TodayEntry.TABLE_NAME + " (" +
-                    TodayPersistenceContract.TodayEntry._ID + INTEGER_TYPE + " PRIMARY KEY," +
-                    TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID + TEXT_TYPE + COMMA_SEP +
+                    TodayPersistenceContract.TodayEntry._ID + INTEGER_TYPE + " PRIMARY KEY AUTO_INCREMENT," +
                     TodayPersistenceContract.TodayEntry.COLUMN_NAME_TYPE + TEXT_TYPE + COMMA_SEP +
                     TodayPersistenceContract.TodayEntry.COLUMN_NAME_TITLE + TEXT_TYPE + COMMA_SEP +
                     TodayPersistenceContract.TodayEntry.COLUMN_NAME_URL + TEXT_TYPE + COMMA_SEP +

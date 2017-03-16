@@ -17,6 +17,9 @@ import com.example.lzp.ganhuo.R;
 import com.example.lzp.ganhuo.activity.BrowserActivity;
 import com.example.lzp.ganhuo.activity.ImageGalleryActivity;
 import com.example.lzp.ganhuo.adapter.TodayRecyclerViewAdapter;
+import com.example.lzp.ganhuo.app.BaseApplication;
+import com.example.lzp.ganhuo.data.today.TodayLocalDataSource;
+import com.example.lzp.ganhuo.data.today.TodayRepository;
 import com.example.lzp.ganhuo.fragment.BaseFragment;
 import com.example.lzp.ganhuo.net.MyVolley;
 
@@ -27,7 +30,8 @@ import java.util.Date;
  * Created by lzp on 2017/3/8.
  */
 
-public class TodayFragment extends BaseFragment implements TodayContract.View, SwipeRefreshLayout.OnRefreshListener {
+public class TodayFragment extends BaseFragment implements TodayContract.View, SwipeRefreshLayout
+        .OnRefreshListener {
     public static final String TAG = TodayFragment.class.getSimpleName();
 
     private TodayContract.Presenter mPresenter;
@@ -44,7 +48,8 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new TodayPresenter(this);
+        mPresenter = new TodayPresenter(TodayRepository.getInstance(TodayLocalDataSource
+                .getInstance(BaseApplication.sApplication)), this);
     }
 
     @Nullable
@@ -82,7 +87,8 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     private TodayInterface todayInterface = new TodayInterface() {
         @Override
         public void showImage(String imageUrl) {
-            Intent intent = new Intent(TodayFragment.this.getActivity(), ImageGalleryActivity.class);
+            Intent intent = new Intent(TodayFragment.this.getActivity(), ImageGalleryActivity
+                    .class);
             intent.putExtra(ImageGalleryActivity.KEY_CUR_URL, imageUrl);
             TodayFragment.this.getActivity().startActivity(intent);
         }

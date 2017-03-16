@@ -17,5 +17,6 @@ public class ImageGalleryActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagegallery);
         String url = getIntent().getStringExtra(KEY_CUR_URL);//当前显示的图片的url
+
     }
 }

@@ -36,7 +36,6 @@ public class TodayPersistenceContract {
         public static final String COLUMN_NAME_AUTHER = "auther";
         public static final String COLUMN_NAME_IMAGEURL = "imageurl";
         public static final String COLUMN_NAME_DATE = "date";
-        public static final String COLUMN_NAME_ENTRY_ID = "entryId";
         public static final Uri CONTENT_TODAY_URI = BASE_CONTENT_URI.buildUpon().appendPath(TABLE_NAME).build();
         public static String[] TODAY_COLUMNS = new String[]{
                 TodayEntry._ID,
@@ -46,7 +45,6 @@ public class TodayPersistenceContract {
                 TodayEntry.COLUMN_NAME_AUTHER,
                 TodayEntry.COLUMN_NAME_IMAGEURL,
                 TodayEntry.COLUMN_NAME_DATE,
-                TodayEntry.COLUMN_NAME_ENTRY_ID
         };
 
         public static Uri buildTodayUriWith(long id) {

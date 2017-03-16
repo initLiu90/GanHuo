@@ -39,6 +39,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -78,6 +79,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -117,6 +119,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -156,6 +159,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -195,6 +199,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -234,6 +239,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");
@@ -265,6 +271,7 @@ public class JsonParser {
                         String createdAt = jsobj.getString("createdAt");
                         String desc = jsobj.getString("desc");
                         String publishedAt = jsobj.getString("publishedAt");
+                        publishedAt = publishedAt.substring(0,10);
                         String source = jsobj.getString("source");
                         String type = jsobj.getString("type");
                         String url = jsobj.getString("url");

@@ -65,7 +65,7 @@ public class GHProvider extends ContentProvider {
                 String[] where = {uri.getLastPathSegment()};
                 retCursor = mGHDbHelper.getReadableDatabase().query(TodayPersistenceContract.TodayEntry.TABLE_NAME,
                         projection,
-                        TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID + " = ?",
+                        TodayPersistenceContract.TodayEntry._ID + " = ?",
                         where,
                         null,
                         null,
@@ -87,30 +87,12 @@ public class GHProvider extends ContentProvider {
 
         switch (match) {
             case TODAY:
-                Cursor exists = db.query(TodayPersistenceContract.TodayEntry.TABLE_NAME,
-                        new String[]{TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID},
-                        TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID + " = ?",
-                        new String[]{values.getAsString(TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID)},
-                        null,
-                        null,
-                        null);
-                if (exists.moveToLast()) {
-                    long _id = db.update(TodayPersistenceContract.TodayEntry.TABLE_NAME, values, TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID + " = ?",
-                            new String[]{values.getAsString(TodayPersistenceContract.TodayEntry.COLUMN_NAME_ENTRY_ID)});
-                    if (_id > 0) {
-                        returnUri = TodayPersistenceContract.TodayEntry.buildTodayUriWith(_id);
-                    } else {
-                        throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
+                long _id = db.insert(TodayPersistenceContract.TodayEntry.TABLE_NAME, null, values);
+                if (_id > 0) {
+                    returnUri = TodayPersistenceContract.TodayEntry.buildTodayUriWith(_id);
                 } else {
-                    long _id = db.insert(TodayPersistenceContract.TodayEntry.TABLE_NAME, null, values);
-                    if (_id > 0) {
-                        returnUri = TodayPersistenceContract.TodayEntry.buildTodayUriWith(_id);
-                    } else {
-                        throw new android.database.SQLException("Failed to insert row into " + uri);
-                    }
+                    throw new android.database.SQLException("Failed to insert row into " + uri);
                 }
-                exists.close();
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
