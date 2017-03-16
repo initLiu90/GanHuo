@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.view.menu.MenuAdapter;
+import android.util.Log;
 
 import com.example.lzp.ganhuo.BuildConfig;
 import com.example.lzp.ganhuo.data.today.TodayPersistenceContract;
@@ -58,6 +59,7 @@ public class GHProvider extends ContentProvider {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
             case TODAY:
+                Log.e("Test", "query :" + selection + selectionArgs[0]);
                 retCursor = mGHDbHelper.getReadableDatabase().query(TodayPersistenceContract.TodayEntry.TABLE_NAME,
                         projection, selection, selectionArgs, null, null, sortOrder);
                 break;

@@ -1,6 +1,7 @@
 package com.example.lzp.ganhuo.data.today;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.lzp.ganhuo.fragment.today.Today;
 
@@ -26,11 +27,16 @@ public class TodayRepository implements TodayDataSource {
 
     @Override
     public void getToday(String date, LoadTodayCallback callback) {
-
+        mTodayLoaclDataSource.getToday(date, callback);
     }
 
     @Override
     public void saveToday(String date, Today today) {
         mTodayLoaclDataSource.saveToday(date, today);
+    }
+
+    @Override
+    public void getTodayImage(String date, LoadTodayImageCallback callback) {
+        mTodayLoaclDataSource.getTodayImage(date, callback);
     }
 }

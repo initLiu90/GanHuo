@@ -1,8 +1,13 @@
 package com.example.lzp.ganhuo.fragment.today;
 
+import android.util.Log;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.lzp.ganhuo.data.today.TodayDataSource;
 import com.example.lzp.ganhuo.data.today.TodayRepository;
+import com.example.lzp.ganhuo.fragment.today.Today;
+import com.example.lzp.ganhuo.fragment.today.TodayContract;
 import com.example.lzp.ganhuo.net.MyVolley;
 import com.example.lzp.ganhuo.util.JsonParser;
 
@@ -27,21 +32,33 @@ public class TodayPresenter implements TodayContract.Presenter {
      * @param date 2017/08/21
      */
     @Override
-    public void requestTodayData(String date) {
+    public void requestTodayData(final String date) {
         mTodayView.showLoadingIndicator(true);
+        getTodayFromDatabase(date);
+    }
+
+    private void getTodayFromNetwork(String date) {
         String url = TODAY_URL + date;
+        Log.e("Test","getTodayFromNetwork url"+url);
         ResponseListener listener = new ResponseListener(this, date);
         MyVolley.request(url, REQUEST_TAG, listener, listener);
     }
 
-    @Override
-    public void cancleRequest() {
-        MyVolley.cancleRequest(REQUEST_TAG);
+    private void getTodayFromDatabase(String date) {
+        ResponseListener listener = new ResponseListener(this, date);
+        mTodayRepository.getToday(date, listener);
     }
 
     private void processTodayData(String s, String date) {
         Today today = JsonParser.parse2Today(s);
-        mTodayRepository.saveToday(date, today);
+        processTodayData(today, date, true);
+    }
+
+    private void processTodayData(Today today, String date, boolean save) {
+        Log.e("Test", "processTodayData " + save);
+        if (save) {
+            mTodayRepository.saveToday(date, today);
+        }
         mTodayView.showLoadingIndicator(false);
         mTodayView.showTodayData(today);
     }
@@ -51,8 +68,14 @@ public class TodayPresenter implements TodayContract.Presenter {
 
     }
 
+    @Override
+    public void stop() {
+        mTodayView = null;
+        MyVolley.cancleRequest(REQUEST_TAG);
+    }
+
     private static class ResponseListener implements Response.Listener<String>, Response
-            .ErrorListener {
+            .ErrorListener, TodayDataSource.LoadTodayCallback {
         private WeakReference<TodayPresenter> weakReference;
         private String date;
 
@@ -70,7 +93,26 @@ public class TodayPresenter implements TodayContract.Presenter {
         public void onResponse(String s) {
             TodayPresenter presenter = weakReference.get();
             if (presenter != null) {
+                Log.e("Test", "get today from net");
                 presenter.processTodayData(s, date);
+            }
+        }
+
+        @Override
+        public void onTodayLoaded(Today today) {
+            TodayPresenter presenter = weakReference.get();
+            if (presenter != null) {
+                Log.e("Test", "get today from db");
+                presenter.processTodayData(today, date, false);
+            }
+        }
+
+        @Override
+        public void onDataNotAvailable() {
+            Log.e("Test", "onDataNotAvailable");
+            TodayPresenter presenter = weakReference.get();
+            if (presenter != null) {
+                presenter.getTodayFromNetwork(date);
             }
         }
     }

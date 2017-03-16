@@ -6,4 +6,5 @@ package com.example.lzp.ganhuo.fragment;
 
 public interface BasePresenter {
     void start();
+    void stop();
 }

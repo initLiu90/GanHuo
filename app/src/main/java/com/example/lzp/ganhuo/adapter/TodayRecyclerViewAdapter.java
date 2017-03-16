@@ -3,8 +3,6 @@ package com.example.lzp.ganhuo.adapter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +50,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
     public void setData(Today data) {
         mToday = data;
         mData.clear();
-        boolean isEmpty = true;
+
         Today.Results results = mToday.getResults();
         if (results.getFulis().size() != 0) {
             mData.addAll(data.getResults().getFulis());
