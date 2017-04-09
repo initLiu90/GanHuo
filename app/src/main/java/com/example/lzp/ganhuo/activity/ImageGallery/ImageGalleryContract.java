@@ -3,6 +3,8 @@ package com.example.lzp.ganhuo.activity.ImageGallery;
 import com.example.lzp.ganhuo.fragment.BasePresenter;
 import com.example.lzp.ganhuo.fragment.BaseView;
 
+import java.util.List;
+
 /**
  * Created by lzp on 2017/3/17.
  */
@@ -13,6 +15,6 @@ public interface ImageGalleryContract {
     }
 
     interface View extends BaseView<Presenter> {
-        void showImages();
+        void showImages(List<String> imageUrls);
     }
 }

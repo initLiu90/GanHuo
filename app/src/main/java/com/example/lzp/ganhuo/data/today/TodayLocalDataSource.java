@@ -48,6 +48,7 @@ public class TodayLocalDataSource implements TodayDataSource {
         if (mCaches.containsKey(date)) {
             Today today = mCaches.get(date);
             callback.onTodayLoaded(today);
+            return;
         }
         String[] projection = {TodayPersistenceContract.TodayEntry.COLUMN_NAME_TYPE,
                 TodayPersistenceContract.TodayEntry.COLUMN_NAME_TITLE, TodayPersistenceContract
@@ -264,24 +265,43 @@ public class TodayLocalDataSource implements TodayDataSource {
 
     @Override
     public void getTodayImage(String date, LoadTodayImageCallback callback) {
-        //从缓存中取数据
-//        if (mCaches.containsKey(date)) {
-//            Today today = mCaches.get(date);
-//        }
-        String[] projection = {TodayPersistenceContract.TodayEntry.COLUMN_NAME_IMAGEURL};
-        String selection = TodayPersistenceContract.TodayEntry.COLUMN_NAME_DATE + " = ?";
-        String[] selectionArgs = {date};
-
         List<String> imageUrls = new ArrayList<>();
-        Cursor cursor = mResolver.query(TodayPersistenceContract.TodayEntry.CONTENT_TODAY_URI, projection, selection, selectionArgs, null);
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String url = cursor.getString(0);
-                if (!TextUtils.isEmpty(url)) {
-                    imageUrls.add(url);
+        //从缓存中取数据
+        if (mCaches.containsKey(date)) {
+            Today today = mCaches.get(date);
+            imageUrls.addAll(getImageUrl(today.getResults().getAndroids()));
+            imageUrls.addAll(getImageUrl(today.getResults().getIoss()));
+            imageUrls.addAll(getImageUrl(today.getResults().getResources()));
+            imageUrls.addAll(getImageUrl(today.getResults().getVideos()));
+            imageUrls.addAll(getImageUrl(today.getResults().getWebs()));
+            imageUrls.addAll(getImageUrl(today.getResults().getXias()));
+
+        } else {
+            String[] projection = {TodayPersistenceContract.TodayEntry.COLUMN_NAME_IMAGEURL};
+            String selection = TodayPersistenceContract.TodayEntry.COLUMN_NAME_DATE + " = ?";
+            String[] selectionArgs = {date};
+
+            Cursor cursor = mResolver.query(TodayPersistenceContract.TodayEntry.CONTENT_TODAY_URI, projection, selection, selectionArgs, null);
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    String url = cursor.getString(0);
+                    if (!TextUtils.isEmpty(url)) {
+                        imageUrls.add(url);
+                    }
                 }
+                cursor.close();
             }
         }
         callback.onTodayImageLoaded(imageUrls);
+    }
+
+    private List<String> getImageUrl(List<Today.Results.Item> items) {
+        List<String> results = new ArrayList<>();
+        if (items != null && !items.isEmpty()) {
+            for (Today.Results.Item item : items) {
+                results.add(item.getImage());
+            }
+        }
+        return results;
     }
 }
