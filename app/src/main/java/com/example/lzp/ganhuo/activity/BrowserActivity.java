@@ -22,6 +22,8 @@ import android.widget.ProgressBar;
 
 import com.example.lzp.ganhuo.R;
 
+import java.lang.ref.WeakReference;
+
 /**
  * Created by lzp on 2017/3/12.
  */
@@ -57,8 +59,8 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
     private void initWebView() {
         mProgess = (ProgressBar) findViewById(R.id.activity_browser_progress);
         mWebView = (WebView) findViewById(R.id.activity_browser_webview);
-        mClient = new MyWebViewClient();
-        mChromeClient = new MyChromeClient();
+        mClient = new MyWebViewClient(this);
+        mChromeClient = new MyChromeClient(this);
         mWebView.setWebViewClient(mClient);
         mWebView.setWebChromeClient(mChromeClient);
         String url = getIntent().getStringExtra(KEY_URL);
@@ -68,15 +70,30 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
         }
     }
 
-    private class MyChromeClient extends WebChromeClient {
+    private static class MyChromeClient extends WebChromeClient {
+        private WeakReference<BrowserActivity> weakReference;
+
+        public MyChromeClient(BrowserActivity activity) {
+            weakReference = new WeakReference<BrowserActivity>(activity);
+        }
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
             super.onReceivedTitle(view, title);
-            BrowserActivity.this.setTitle(title);
+            BrowserActivity activity = weakReference.get();
+            if (activity != null) {
+                activity.setTitle(title);
+            }
         }
     }
 
-    private class MyWebViewClient extends WebViewClient {
+    private static class MyWebViewClient extends WebViewClient {
+        private WeakReference<BrowserActivity> weakReference;
+
+        public MyWebViewClient(BrowserActivity activity) {
+            weakReference = new WeakReference<BrowserActivity>(activity);
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
             return super.shouldOverrideUrlLoading(view, request);
@@ -85,17 +102,26 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            mFrontHandler.sendEmptyMessage(MSG_START_PROGRESS);
+            BrowserActivity activity = weakReference.get();
+            if (activity != null) {
+                activity.updateUI(MSG_START_PROGRESS);
+            }
+
         }
 
         @Override
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
-            mFrontHandler.sendEmptyMessage(MSG_STOP_PROGRESS);
+            BrowserActivity activity = weakReference.get();
+            if (activity != null) {
+                activity.updateUI(MSG_STOP_PROGRESS);
+            }
         }
+    }
 
-        public MyWebViewClient() {
-            super();
+    private void updateUI(int msg) {
+        if (mFrontHandler != null) {
+            mFrontHandler.sendEmptyMessage(msg);
         }
     }
 
@@ -155,8 +181,21 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mWebView.destroy();
+        mWebView.setWebChromeClient(null);
+        mWebView.setWebViewClient(null);
         mWebView.removeAllViews();
+
+        mProgess.clearAnimation();
+
         mBackgroundHander.removeCallbacksAndMessages(null);
         mFrontHandler.removeCallbacksAndMessages(null);
+
+        mBackgroundHander = null;
+        mFrontHandler = null;
+        mChromeClient = null;
+        mClient = null;
+        mProgess = null;
+        mWebView = null;
     }
 }

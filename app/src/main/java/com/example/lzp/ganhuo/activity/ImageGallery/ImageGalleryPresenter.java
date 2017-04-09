@@ -26,9 +26,7 @@ public class ImageGalleryPresenter implements ImageGalleryContract.Presenter {
         mRepository.getTodayImage(date, new TodayDataSource.LoadTodayImageCallback() {
             @Override
             public void onTodayImageLoaded(List<String> images) {
-                for (String str : images) {
-                    Log.e("Test", str);
-                }
+
             }
         });
     }
