@@ -148,6 +148,8 @@ public class TodayLocalDataSource implements TodayDataSource {
         if (cursor != null) {
             cursor.close();
         }
+        mCaches.put(date, today);//插入缓存
+
         if ((androids.size() + ioss.size() + webs.size() + videos.size() + resources.size() + fulis.size() + xias.size()) == 0) {
             Log.e("Test", "empty");
             callback.onDataNotAvailable();
@@ -299,7 +301,9 @@ public class TodayLocalDataSource implements TodayDataSource {
         List<String> results = new ArrayList<>();
         if (items != null && !items.isEmpty()) {
             for (Today.Results.Item item : items) {
-                results.add(item.getImage());
+                if (item.getImage() != null && !item.getImage().equals("")) {
+                    results.add(item.getImage());
+                }
             }
         }
         return results;

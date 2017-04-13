@@ -1,6 +1,7 @@
-package com.example.lzp.ganhuo.activity.ImageGallery;
+package com.example.lzp.ganhuo.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,13 @@ public class ImageGalleryAdapter extends BaseAdapter {
     @Override
     public long getItemId(int position) {
         return position;
+    }
+
+    public int getItemPosition(String imageUrl) {
+        if (!TextUtils.isEmpty(imageUrl)) {
+            return mData.indexOf(imageUrl);
+        }
+        return -1;
     }
 
     @Override

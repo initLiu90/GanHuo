@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.example.lzp.ganhuo.R;
 import com.example.lzp.ganhuo.activity.BaseActivity;
+import com.example.lzp.ganhuo.adapter.ImageGalleryAdapter;
 import com.example.lzp.ganhuo.app.BaseApplication;
 import com.example.lzp.ganhuo.data.today.TodayLocalDataSource;
 import com.example.lzp.ganhuo.data.today.TodayRepository;
@@ -58,5 +59,9 @@ public class ImageGalleryActivity extends BaseActivity implements ImageGalleryCo
     @Override
     public void showImages(List<String> imageUrls) {
         mAdapter.setData(imageUrls);
+        int pos = mAdapter.getItemPosition(mDefaultUrl);
+        if (pos != -1) {
+            mGallery.setSelection(pos, true);//移动到指定的图片
+        }
     }
 }
