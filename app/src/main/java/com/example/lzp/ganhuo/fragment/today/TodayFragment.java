@@ -122,7 +122,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
             SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
             Date date = new Date();
             String strDate = format.format(date);
-            strDate = "2017/03/16";
+//            strDate = "2017/03/16";
             mCurrentDate = strDate;
             mPresenter.requestTodayData(strDate);
         }

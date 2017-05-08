@@ -10,8 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lzp.ganhuo.R;
+import com.example.lzp.ganhuo.app.BaseApplication;
 import com.example.lzp.ganhuo.fragment.BaseItem;
 import com.example.lzp.ganhuo.fragment.TitleItem;
 import com.example.lzp.ganhuo.fragment.today.EmptyItem;
@@ -163,7 +165,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             Today.Results.Item item = (Today.Results.Item) mData.get(position);
 
             String url = item.getUrl();
-            Glide.with(mContext).load(url).override(800, 800).into(image);
+            Glide.with(BaseApplication.sApplication).load(url).asBitmap().priority(Priority.LOW).centerCrop().override(500, 500).into(image);
         } else if (holder instanceof ItemeHolder) {
             ImageView image = ((ItemeHolder) holder).imgPic;
             TextView des = ((ItemeHolder) holder).txtDes;
@@ -180,7 +182,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             if (!TextUtils.isEmpty(url)) {
                 image.setVisibility(View.VISIBLE);
                 image.setOnClickListener(new TodayItemOnclickListener(position));
-                Glide.with(mContext).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).override(800, 800).into(image);
+                Glide.with(BaseApplication.sApplication).load(url).asBitmap().priority(Priority.LOW).diskCacheStrategy(DiskCacheStrategy.SOURCE).centerCrop().override(200, 200).into(image);
             }
         }
     }

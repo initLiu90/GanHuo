@@ -9,8 +9,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.lzp.ganhuo.R;
+import com.example.lzp.ganhuo.app.BaseApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +69,12 @@ public class ImageGalleryAdapter extends BaseAdapter {
         ImageGalleryItemHolder holder = (ImageGalleryItemHolder) convertView.getTag();
 
         String url = mData.get(position);
-        Glide.with(mContext).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).override(800, 800).into(holder.mImage);
+        Glide.with(mContext).load(url).diskCacheStrategy(DiskCacheStrategy.SOURCE).priority(Priority.LOW).fitCenter().override(359, 591).into(holder.mImage);
         return convertView;
+    }
+
+    public void onDestroy(){
+        Glide.get(mContext).clearDiskCache();
     }
 
     static class ImageGalleryItemHolder {

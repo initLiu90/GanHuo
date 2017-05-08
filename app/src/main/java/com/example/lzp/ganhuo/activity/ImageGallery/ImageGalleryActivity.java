@@ -64,4 +64,12 @@ public class ImageGalleryActivity extends BaseActivity implements ImageGalleryCo
             mGallery.setSelection(pos, true);//移动到指定的图片
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mAdapter != null) {
+            mAdapter.onDestroy();
+        }
+    }
 }
