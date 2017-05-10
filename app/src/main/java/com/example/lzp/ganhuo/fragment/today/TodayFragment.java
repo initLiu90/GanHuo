@@ -46,14 +46,14 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new TodayPresenter(TodayRepository.getInstance(TodayLocalDataSource
-                .getInstance(BaseApplication.sApplication)), this);
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
+        mPresenter = new TodayPresenter(TodayRepository.getInstance(TodayLocalDataSource
+                .getInstance(BaseApplication.sApplication)), this);
         View view = inflater.inflate(R.layout.fragment_today, container, false);
         return view;
     }
@@ -61,6 +61,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
     }
 
     @Override

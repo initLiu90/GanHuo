@@ -165,7 +165,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             Today.Results.Item item = (Today.Results.Item) mData.get(position);
 
             String url = item.getUrl();
-            Glide.with(BaseApplication.sApplication).load(url).asBitmap().priority(Priority.LOW).centerCrop().override(500, 500).into(image);
+            Glide.with(BaseApplication.sApplication).load(url).priority(Priority.LOW).centerCrop().override(500, 500).into(image);
         } else if (holder instanceof ItemeHolder) {
             ImageView image = ((ItemeHolder) holder).imgPic;
             TextView des = ((ItemeHolder) holder).txtDes;
@@ -182,7 +182,7 @@ public class TodayRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.
             if (!TextUtils.isEmpty(url)) {
                 image.setVisibility(View.VISIBLE);
                 image.setOnClickListener(new TodayItemOnclickListener(position));
-                Glide.with(BaseApplication.sApplication).load(url).asBitmap().priority(Priority.LOW).diskCacheStrategy(DiskCacheStrategy.SOURCE).centerCrop().override(200, 200).into(image);
+                Glide.with(BaseApplication.sApplication).load(url).priority(Priority.LOW).diskCacheStrategy(DiskCacheStrategy.SOURCE).centerCrop().override(200, 200).into(image);
             }
         }
     }

@@ -74,7 +74,6 @@ public class ImageGalleryAdapter extends BaseAdapter {
     }
 
     public void onDestroy(){
-        Glide.get(mContext).clearDiskCache();
     }
 
     static class ImageGalleryItemHolder {

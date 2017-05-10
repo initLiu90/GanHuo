@@ -149,7 +149,9 @@ public class BrowserActivity extends BaseActivity implements Handler.Callback {
 
                     @Override
                     public void onAnimationEnd(Animation animation) {
-                        mProgess.setVisibility(View.GONE);
+                        if (mProgess != null) {
+                            mProgess.setVisibility(View.GONE);
+                        }
                     }
 
                     @Override
