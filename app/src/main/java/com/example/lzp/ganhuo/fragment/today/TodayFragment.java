@@ -37,6 +37,7 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     private LinearLayoutManager mLayoutManager;
     private TodayRecyclerViewAdapter mAdapter;
     private String mCurrentDate;
+    private View mConverView;
 
     @Override
     public int getTitle() {
@@ -52,21 +53,23 @@ public class TodayFragment extends BaseFragment implements TodayContract.View, S
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable
             Bundle savedInstanceState) {
-        mPresenter = new TodayPresenter(TodayRepository.getInstance(TodayLocalDataSource
-                .getInstance(BaseApplication.sApplication)), this);
-        View view = inflater.inflate(R.layout.fragment_today, container, false);
-        return view;
+        //以下是为了防止滑动到别的页面后，在回到当前页面从新加载数据。
+        //因为fragment没有被销毁，所以fragment中的实例都还存在，所以可以直接加载原来实例。
+        if (mConverView == null) {
+            mPresenter = new TodayPresenter(TodayRepository.getInstance(TodayLocalDataSource
+                    .getInstance(BaseApplication.sApplication)), this);
+            mConverView = inflater.inflate(R.layout.fragment_today, container, false);
+            doOnViewCreated(mConverView);
+        } else {
+            ViewGroup parent = (ViewGroup) mConverView.getParent();
+            if (parent != null) {
+                parent.removeView(mConverView);
+            }
+        }
+        return mConverView;
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void doOnViewCreated(View view) {
         mSwipRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.today_swipe_refresh);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.today_recycler);
         initView();
