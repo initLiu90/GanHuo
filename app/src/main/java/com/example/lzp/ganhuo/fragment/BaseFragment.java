@@ -12,4 +12,10 @@ public class BaseFragment extends Fragment {
     public int getTitle() {
         return 0;
     }
+
+    public void add() {
+    }
+
+    public void decrease() {
+    }
 }
