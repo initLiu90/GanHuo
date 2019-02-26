@@ -1,7 +1,12 @@
 package com.lzp.ganhuo.api.net;
 
-import com.lzp.ganhuo.api.ApiService;
+import android.util.Log;
 
+import com.lzp.ganhuo.App;
+import com.lzp.ganhuo.api.ApiService;
+import com.readystatesoftware.chuck.ChuckInterceptor;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class Client {
     private static Client sClient;
     private Retrofit mRetrofit;
+    private OkHttpClient mOkhttpClient;
 
     private Client() {
     }
@@ -32,10 +38,23 @@ public final class Client {
     }
 
     private void initRetrofit() {
+        initOkhttp();
         mRetrofit = new Retrofit.Builder()
                 .baseUrl("https://square.github.io/retrofit/")
+                .client(mOkhttpClient)
                 .addCallAdapterFactory(RxErrorHandlingCallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+    }
+
+    private void initOkhttp() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        try {
+            Class.forName("com.readystatesoftware.chuck.ChuckInterceptor");
+            builder.addInterceptor(new ChuckInterceptor(App.getApp().getBaseContext()));
+        } catch (ClassNotFoundException e) {
+            Log.e("Test", "cannot find ChuckInterceptor");
+        }
+        mOkhttpClient = builder.build();
     }
 }

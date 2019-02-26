@@ -8,7 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class ActivityMainViewModel extends ViewModel {
-    private final String[] categorys = {"Android", "iOS", "前端"};
+    private final String[] categorys = {"Android", "iOS", "前端", "拓展资源", "福利"};
     private final MutableLiveData<Map<Integer, CategoryItem>> mData;
 
     public ActivityMainViewModel() {

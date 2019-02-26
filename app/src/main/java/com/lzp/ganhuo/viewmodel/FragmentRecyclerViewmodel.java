@@ -1,6 +1,7 @@
 package com.lzp.ganhuo.viewmodel;
 
 import com.lzp.ganhuo.api.ApiCallException;
+import com.lzp.ganhuo.model.Repository;
 import com.lzp.ganhuo.model.bean.CategoryItem;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import androidx.core.util.Pair;
 import androidx.databinding.ObservableField;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import io.reactivex.Observable;
@@ -21,36 +23,23 @@ public class FragmentRecyclerViewmodel extends ViewModel {
 
 
     public void requestCategoryItem(String category) {
-//        Repository.getInstance()
-//                .categoryItem(category, 10, 1)
-//                .subscribe(item -> {
-//                    mItem.setValue(item);
-//                }, t -> {
-//                    if (t instanceof ApiCallException) {
-//                        ApiCallException ex = (ApiCallException) t;
-//                        mError.setValue(new Pair<>(ex.getType(), ex.getErrorBodyJsonString()));
-//                    }
-//                });
-        Observable.just(category)
-                .map((str) -> {
-                    CategoryItem categoryItem = new CategoryItem();
-                    List<CategoryItem.Item> items = new ArrayList<>();
-                    CategoryItem.Item item = new CategoryItem.Item();
-                    item.setDesc(category);
-                    items.add(item);
-                    categoryItem.setResults(items);
-                    return categoryItem;
-                })
-                .delay(1000l, TimeUnit.MICROSECONDS, Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(item -> mItem.setValue(item));
+        Repository.getInstance()
+                .categoryItem(category, 10, 1)
+                .subscribe(item -> {
+                    mItem.setValue(item);
+                }, t -> {
+                    if (t instanceof ApiCallException) {
+                        ApiCallException ex = (ApiCallException) t;
+                        mError.setValue(new Pair<>(ex.getType(), ex.getErrorBodyJsonString()));
+                    }
+                });
     }
 
-    public MutableLiveData<CategoryItem> getItem() {
+    public LiveData<CategoryItem> getItem() {
         return mItem;
     }
 
-    public MutableLiveData<Pair<ApiCallException.Type, String>> getError() {
+    public LiveData<Pair<ApiCallException.Type, String>> getError() {
         return mError;
     }
 }
