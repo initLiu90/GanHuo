@@ -46,7 +46,8 @@ public class RecycerviewAdapter extends BaseRecyclerViewAdapter<List<CategoryIte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.txtDesc.setText(mData.get(position).getDesc());
+        holder.binding.setItem(mData.get(position));
+        holder.binding.executePendingBindings();
     }
 
     @Override
@@ -55,11 +56,11 @@ public class RecycerviewAdapter extends BaseRecyclerViewAdapter<List<CategoryIte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        final TextView txtDesc;
+        CategoryRecyclerItemBinding binding;
 
         public ViewHolder(CategoryRecyclerItemBinding binding) {
             super(binding.getRoot());
-            txtDesc = binding.categoryListItemDesc;
+            this.binding = binding;
         }
     }
 }
