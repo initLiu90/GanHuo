@@ -1,67 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.lzp.ganhuo.activity.MainActivity">
+    tools:context=".ui.MainActivity">
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/pager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <data>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="?android:windowTitleSize"
-            android:layout_gravity="top"
-            app:tabBackground="@color/colorPrimary"
-            app:tabGravity="center"
-            app:tabMinWidth="@dimen/tab_width"
-            app:tabMode="scrollable" />
-    </android.support.v4.view.ViewPager>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        app:borderWidth="0dp"
-        android:src="@drawable/ic_history_more_history" />
-
+        <variable
+            name="vm"
+            type="com.lzp.ganhuo.viewmodel.ActivityMainViewModel" />
+    </data>
 
     <LinearLayout
-        android:id="@+id/date_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/date"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/date_decrease"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:borderWidth="0dp"
-            android:src="@drawable/ic_arrow_vote_down_pressed_light" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/activity_main_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/date_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            app:borderWidth="0dp"
-            android:src="@drawable/ic_arrow_vote_up_pressed_light" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/activity_main_tab"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                app:tabMode="scrollable"
+                app:tabTextAppearance="@style/Tab" />
+        </androidx.viewpager.widget.ViewPager>
 
     </LinearLayout>
 
-
-</RelativeLayout>
+</layout>
