@@ -3,8 +3,8 @@ package com.lzp.ganhuo.ui;
 import android.os.Bundle;
 
 import com.lzp.ganhuo.R;
-import com.lzp.ganhuo.ui.adapter.HomeViewpagerAdapter;
 import com.lzp.ganhuo.databinding.ActivityMainBinding;
+import com.lzp.ganhuo.ui.adapter.HomeViewpagerAdapter;
 import com.lzp.ganhuo.viewmodel.ActivityMainViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void initBinding() {
         mBinding.setLifecycleOwner(this);
-        mBinding.setVm(mViewModel);
     }
 
     private void setupViewpager() {
