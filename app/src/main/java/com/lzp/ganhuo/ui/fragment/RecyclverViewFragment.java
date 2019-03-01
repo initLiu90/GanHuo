@@ -1,6 +1,7 @@
 package com.lzp.ganhuo.ui.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.lzp.ganhuo.R;
 import com.lzp.ganhuo.databinding.FragmentRecyclerBinding;
 import com.lzp.ganhuo.ui.adapter.RecycerviewAdapter;
+import com.lzp.ganhuo.viewmodel.CategoryViewModelFactory;
 import com.lzp.ganhuo.viewmodel.FragmentRecyclerViewmodel;
 
 import androidx.annotation.NonNull;
@@ -52,7 +54,7 @@ public class RecyclverViewFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         setupRecyclerview();
-        mViewModel.requestCategoryItem(mCategory);
+        mViewModel.lastedData();
     }
 
     private void setupRecyclerview() {
@@ -60,10 +62,28 @@ public class RecyclverViewFragment extends Fragment {
         mBinding.fragmentCategoryList.setAdapter(mAdapter);
         mBinding.fragmentCategoryList.addItemDecoration(new DividerItemDecoration(getContext(), RecyclerView.VERTICAL));
         mBinding.fragmentCategoryList.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        mBinding.fragmentCategoryList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState != RecyclerView.SCROLL_STATE_IDLE) {
+                    boolean atBottom = !recyclerView.canScrollVertically(1);
+                    if (atBottom) {
+                        mViewModel.loadMore();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+            }
+        });
     }
 
     private void initViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(FragmentRecyclerViewmodel.class);
+        mViewModel = ViewModelProviders.of(this, CategoryViewModelFactory.getInstance(mCategory)).get(FragmentRecyclerViewmodel.class);
         /*
         不再layout文件中绑定数据，改成直接为LiveData添加Observe的方式。
         因为如果在layout里面绑定数据的话，创建Binding对象时以及在Fragment的生命周期运行到onStart时都会触发executeBinding
@@ -74,7 +94,8 @@ public class RecyclverViewFragment extends Fragment {
 
         换成下面这种方式，由于在layout中不存在对viewmode中数据的引用，所以执行executeBinding时就不会展示对应的数据。只有当请求网络数据返回后更新viewmode中数据时，才会触下面代码中添加的observer。
         */
-        mViewModel.getItem().observe(this, categoryItem -> mAdapter.addData(categoryItem.getResults()));
+        mViewModel.getItem().observe(this, categoryItem -> mAdapter.setData(categoryItem.getResults()));
+        mViewModel.getMoreItem().observe(this, categoryItem -> mAdapter.addData(categoryItem.getResults()));
         mViewModel.getError().observe(this, error -> Toast.makeText(getContext(), error.second, Toast.LENGTH_SHORT).show());
     }
 }

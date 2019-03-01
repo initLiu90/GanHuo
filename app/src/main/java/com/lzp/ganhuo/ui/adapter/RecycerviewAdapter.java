@@ -17,6 +17,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class RecycerviewAdapter extends BaseRecyclerViewAdapter<List<CategoryItem.Item>, RecycerviewAdapter.ViewHolder> {
+    private static final int ITEM_TYPE_NORMAL = 1;
+    private static final int ITEM_TYPE_MORE = 2;
+
     private List<CategoryItem.Item> mData;
 
     @Override
@@ -52,7 +55,25 @@ public class RecycerviewAdapter extends BaseRecyclerViewAdapter<List<CategoryIte
 
     @Override
     public int getItemCount() {
-        return mData == null ? 0 : mData.size();
+        if (mData == null) {
+            return 0;
+        } else {
+            if (isShowMore()) {
+                return mData.size() + 1;
+            } else {
+                return mData.size();
+            }
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (isShowMore()) {
+            if (position == mData.size()) {
+                return ITEM_TYPE_MORE;
+            }
+        }
+        return ITEM_TYPE_NORMAL;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

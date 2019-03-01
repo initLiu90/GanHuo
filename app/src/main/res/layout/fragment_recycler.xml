@@ -8,8 +8,17 @@
             type="com.lzp.ganhuo.viewmodel.FragmentRecyclerViewmodel" />
     </data>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_category_list"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        refreshing="@{vm.isRefresing}"
+        onRefresh="@{()->vm.lastedData()}">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/fragment_category_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            showMore="@{vm.isLoadingMore()}"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
